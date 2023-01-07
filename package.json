@@ -1,0 +1,20 @@
+{
+  "name": "instagram-message-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "instagram-private-api": "^1.45.3",
+    "mysql2": "^2.3.3",
+    "ngrok": "^4.3.3",
+    "nodemon": "^2.0.20",
+    "random-token": "^0.0.8",
+    "sequelize": "^6.28.0",
+    "sequelize-cli": "^6.5.2",
+    "tough-cookie-filestore": "^0.0.1"
+  },
+  "scripts": {
+    "start": "nodemon ./src/index.js"
+  }
+}
