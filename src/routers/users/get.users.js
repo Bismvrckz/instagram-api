@@ -1,18 +1,13 @@
 const express = require("express");
-const { getInbox } = require("../../components/IgApiClient/get.inbox");
+const { getInbox } = require("../../components/InstagramGraphApi/get.inbox");
 const { users } = require("../../../models");
 const router = express.Router();
 
 async function getInboxRouterFunction(req, res, next) {
   try {
-    const { username } = req.query;
+    const { page_id, page_access_token } = req.query;
 
-    const resFindOne = await users.findOne({ where: { username } });
-    const { jsonSession } = resFindOne;
-
-    const inbox = await getInbox({ jsonSession });
-
-    console.log({ inbox });
+    const inbox = await getInbox({ page_id, page_access_token });
 
     res.send({
       status: "Success",

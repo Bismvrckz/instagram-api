@@ -1,47 +1,48 @@
 const express = require("express");
 const router = express.Router();
-const { Ig_Api_Components } = require("../../components/IgApiClient");
-const { Direct } = require("instagram-private-api");
-const { getInbox } = require("../../components/IgApiClient/get.inbox");
 const { users } = require("../../../models");
+const { get_user_pages } = require("../../components/InstagramGraphApi");
 
-async function signInRouterFunction(req, res, next) {
+async function SignInRouterFunction(req, res, next) {
   try {
-    const { username, password } = req.body;
-    var { loggedInUser, ig, error, jsonSession, inbox, conversations } =
-      await Ig_Api_Components({
-        username,
-        password,
-      });
+    const { access_token, app_id, app_secret } = req.body;
+
+    const { user_pages, error } = await get_user_pages({
+      access_token,
+      app_id,
+      app_secret,
+    });
 
     if (error) throw error;
 
-    // const { pk } = loggedInUser;
-    // const { inbox } = await getInbox({ pk });
-
-    // const inbox = await ig.directThread();
-
-    const insertedUser = await users.create({
-      username,
-      password,
-      jsonSession,
-    });
-
-    console.log({ conversations });
+    const { data } = user_pages;
 
     res.send({
       status: "Success",
       httpCode: 200,
-      jsonSession,
-      conversations,
+      data,
     });
   } catch (error) {
     next(error);
-  } finally {
-    // ig.account.logout();
   }
 }
 
-router.post("/instagram", signInRouterFunction);
+async function LoginInstagramPrivateApiFunction(req, res, next) {
+  try {
+    const { username, password } = req.body;
+
+    console.log({ username, password });
+
+    res.send({
+      status: "Success",
+      httpCode: 200,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+router.post("/instagram-private-api", LoginInstagramPrivateApiFunction);
+router.post("/instagram", SignInRouterFunction);
 
 module.exports = router;
