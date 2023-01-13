@@ -14,7 +14,7 @@ async function postImageRouterFunction(req, res, next) {
     const { SERVER_URL } = process.env;
 
     const resSendImage = await axiosFacebookInstance.post(
-      `${page_id}/messages?recipient={id: ${user_id}}&message={'attachment':{'type':'image','payload':{'url':'${SERVER_URL}/public/messages/images/${image_file_id}.${image_extension}'}}}&access_token=${access_token}`
+      `${page_id}/messages?recipient={id: ${user_id}}&message={'attachment':{'type':'image','payload':{'url':'${SERVER_URL}/public/messages/images/${image_file_id}.${image_extension}'}}}&access_token=${access_token}&messaging_type=MESSAGE_TAG&tag=HUMAN_AGENT`
     );
 
     console.log(resSendImage.data);

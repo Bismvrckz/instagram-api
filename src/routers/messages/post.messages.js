@@ -16,7 +16,6 @@ async function sendMessageRouterFunction(req, res, next) {
       sentMessage: resSendMessage.data,
     });
   } catch (error) {
-    console.log(error.response.data);
     next(error);
   }
 }

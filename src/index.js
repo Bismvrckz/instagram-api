@@ -31,7 +31,7 @@ require("dotenv").config();
       const errorObj = {
         status: "Error",
         message: error.errorMessage,
-        detail: error,
+        detail: error.response ? error.response.data : error,
       };
 
       const httpCode = typeof error.code == "number" ? error.code : 500;
